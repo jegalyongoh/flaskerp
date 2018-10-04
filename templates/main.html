@@ -1,0 +1,83 @@
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        .navbars{
+            list-style: none;
+            margin-bottom: 0px;
+            width: 100%;
+            background-color: #8C8C8C;  
+            height: 40px;
+            text-align: right;
+            color: white
+            
+        }
+        .subnavbars{
+            margin: 0px;
+            list-style: none;
+            position: fixed;
+            width: 100%;
+            background-color: #8C8C8C;  
+            text-decoration: none
+        }
+        #logo{
+            width: 150px;
+            height: 40px;
+            margin: 5px;
+        }
+        #infobar{
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        #view {
+            width: 100%;
+            height: 80%;
+        }
+        #logout_logo{
+            width: 50px;
+            height: 40px;
+        }
+    </style>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- 
+        chrome 오류로 인해 변경된 점이 서버를 껐다 켜야 바뀌므로 파일을 따로 구분안하고 html파일에 한번에 삽입하였습니다.
+        
+        <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}" charset="utf-8"></script>
+    -->
+    <script>
+        $(document).ready(function () {
+           var table = $('#boardtab').DataTable({
+                    "lengthMenu" : [ [ 3, 5, 10, -1 ], [ 3, 5, 10, "All" ]],
+                    "ajax" : {
+                        url : '/showboard',
+                        type : 'POST',
+                    },
+                    columnDefs : [ {
+                        targets : 1,
+                        render : function(url,type,row){
+                            return '<a href="./creates/'+row[0]+'">'+url+'</a>';
+                        }
+                    }]
+            });
+        });
+    </script>
+</head>
+<body>
+    <ul class="navbars">
+        <p><font id="infobar">{{ name }} / {{ rank }}</font><a href="/logout"><img src="{{ url_for('static', filename='img/logout.png')}}" id='logout_logo'/></a></p>
+    </ul>
+    <ul class="subnavbars">
+        <p><a href="/" id="navhref"><img src="{{ url_for('static', filename='img/imcloud.png')}}" id='logo'/></a></p>
+    </ul>
+    <div class="panel">
+        <div class="panel-heading">
+                <a href="/create" target="view"><button class="btn btn-danger" style="width : 200px; margin-top : 60px">작성하기</button></a>
+        </div>
+        <div class="panel-main">
+            <iframe src="/boards/table" id="view" name="view"></iframe>
+        </div>
+        <div class="panelfooter"></div>
+    </div>
+</body>
+</html>

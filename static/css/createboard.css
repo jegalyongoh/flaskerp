@@ -1,0 +1,17 @@
+.panel {
+    text-align: center
+}
+.nse_content {width: 890px; height: 500px;}
+#create_{
+    width: 1000px;
+    margin: auto;
+}
+#title {
+    width: 890px;
+}
+#subtags{
+    width: 10%;
+}
+#tags{
+    width: 80%;
+}

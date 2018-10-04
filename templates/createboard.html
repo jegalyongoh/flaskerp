@@ -1,0 +1,89 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>게시글 작성</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='nse_files/js/HuskyEZCreator.js') }}" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- 
+        chrome 오류로 인해 변경된 점이 서버를 껐다 켜야 바뀌므로 파일을 따로 구분안하고 html파일에 한번에 삽입하였습니다.
+        
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename='css/createboard.css') }}" />
+    -->
+    <style type="text/css">
+        .panel {
+            text-align: center
+        }
+        .nse_content {width: 890px; height: 500px;}
+        #create_{
+            width: 1000px;
+            margin: auto;
+        }
+        #title {
+            width: 890px;
+        }
+        #subtags{
+            width: 10%;
+        }
+        #tags{
+            width: 80%;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel panel">
+        <div class="panel panel-header">
+            <h2>CREATE board</h2>
+        </div>
+        <div class="panel panel-body">
+            <table id="create_">
+                <form id="nse" name="nse" action="./create/board" method="post">
+                        <tr>
+                            <td id="subtags">제목</td>
+                            <td id="tags"><input type="text" id="title" name="title"/></td>
+                        </tr>
+                        <tr>
+                            <td id="subtags">내용</td>
+                            <td id="tags">
+                                <textarea name="ir1" id="ir1" class="nse_content">{{board_form}}</textarea>
+                                <script type="text/javascript">
+                                    var oEditors = [];
+                                    nhn.husky.EZCreator.createInIFrame({
+                                        oAppRef: oEditors,
+                                        elPlaceHolder: "ir1",
+                                        sSkinURI: "{{ url_for('static', filename='nse_files/SmartEditor2Skin.html')}}",
+                                        fCreator: "createSEditor2"
+                                        
+                                    });
+                                    function submitContents(elClickedObj) {
+                                        // 에디터의 내용이 textarea에 적용됩니다.
+                                        oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
+                                        // 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+                                        
+                                        try {
+                                            elClickedObj.form.submit();
+                                        } catch(e) {}
+                                        }
+                                    
+                                </script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center"><input type="submit" value="전송" onclick="submitContents(this)"/></td>
+                        </tr> 
+                        <tr>
+                            <td colspan="2" style="text-align:center"><input type="button" value="뒤로가기" onclick="history.back()"/></td>
+                        </tr> 
+                </form>
+            </table>
+        </div>
+        <div class="panel panel-footer">
+            <h4>i'm cloud</h4>
+        </div>
+        
+    </div>
+</body>
+
+</html>

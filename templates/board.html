@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>board</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- 
+        chrome 오류로 인해 변경된 점이 서버를 껐다 켜야 바뀌므로 파일을 따로 구분안하고 html파일에 한번에 삽입하였습니다.
+        
+        <script type="text/javascript" src="{{ url_for('static', filename='js/board.js') }}" charset="utf-8"></script>
+    -->
+    
+    {% for a,b,c in content %}
+    <script>
+        var text = "{{ a }}";
+        $.ajax({
+            type : "POST",
+            url : '/boardcontent',
+            data : {'_id' : text},
+
+            success : function(data){
+                $('#content').html(data);
+                console.log(data)
+            }
+        })
+        function sub(){
+            var inputname = $('#inputname').val();
+            var inputbu = $('#inputbu').val();
+            var inputrank = $('#inputrank').val();
+            $('#name').text(inputname);
+            $('#bu').text(inputbu);
+            $('#rank').text(inputrank);
+        }
+    </script>
+    <style>
+    </style>
+</head>
+<body>
+    <center>
+        <div class="panel panel">
+                <div cla[ss="panel panel-header" style="background-color : #EAEAEA; height: 100px;">
+                    <h1>{{ b }}</h1>
+                </div>
+                <div class="panel panel-body">
+                    이름 : <input id="inputname"/><br>
+                    부서 : <input id="inputbu"/><br>
+                    직급 : <input id="inputrank"/><br>
+                    <button onclick="sub()" class="btn btn-success" style="width: 220px">입력</button>
+                    <div id="content"></div>
+                    <button onclick="location.href='/'">MAIN</button>
+                </div>
+                <div class="panel panel-footer">
+                    <h4>i'm cloud</h4>
+                </div>
+        </div>  
+    {% endfor %}
+    </center>
+</body>
+</html>

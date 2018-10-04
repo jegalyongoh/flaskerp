@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <script>
+        $(document).ready(function () {
+            var table = $('#boardtab').DataTable({
+                "lengthMenu": [[3, 5, 10, -1], [3, 5, 10, "All"]],
+                "ajax": {
+                    url: '/showboard',
+                    type: 'POST',
+                },
+                columnDefs: [{
+                    targets: 1,
+                    render: function (url, type, row) {
+                        return '<a href="/creates/' + row[0] + '">' + url + '</a>';
+                    }
+                }]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <table class="display" id="boardtab" style="width:100%">
+        <thead>
+            <tr>
+                <th style="width:20%">boardID</th>
+                <th style="width:80%">title</th>
+            </tr>
+        </thead>
+    </table>
+</body>
+
+</html>
